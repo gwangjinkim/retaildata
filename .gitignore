@@ -16,6 +16,7 @@ retaildata/cache/
 retaildata/__pycache__/
 retaildata/*/__pycache__/
 *.duckdb
+.pypirc
 
 # datasets
 *.csv
