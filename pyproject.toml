@@ -1,6 +1,6 @@
 [project]
 name = "retaildata"
-version = "0.1.3"
+version = "0.1.4"
 description = "Unified download and managing of real-world retail datasets for analysis and benchmarking."
 authors = [
   {name = "Gwang-Jin Kim", email = "gwang.jin.kim.phd@gmail.com"}

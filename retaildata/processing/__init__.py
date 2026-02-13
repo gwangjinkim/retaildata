@@ -1,3 +1,3 @@
-from retaildata.processing.manager import ProcessingManager, manager
+from .manager import ProcessingManager
 
-__all__ = ["ProcessingManager", "manager"]
+__all__ = ["ProcessingManager"]
