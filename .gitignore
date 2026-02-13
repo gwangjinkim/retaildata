@@ -12,6 +12,9 @@ test_data_*/
 test_m*/
 data/
 .cache/
+retaildata/cache/
+retaildata/__pycache__/
+retaildata/*/__pycache__/
 *.duckdb
 
 # datasets
