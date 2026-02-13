@@ -1,12 +1,26 @@
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Any, Dict
 import polars as pl
 from retaildata.config import settings
+from retaildata.datasets.registry import Registry
 from rich import print as rprint
 
 class ProcessingManager:
     def __init__(self):
         self.data_dir = settings.final_data_dir
+        self._dtype_map = {
+            "String": pl.String,
+            "Int64": pl.Int64,
+            "Float64": pl.Float64,
+            "Boolean": pl.Boolean,
+            "Date": pl.Date,
+            "Datetime": pl.Datetime
+        }
+
+    def _get_pl_schema(self, schema_dict: Optional[Dict[str, str]]) -> Optional[Dict[str, Any]]:
+        if not schema_dict:
+            return None
+        return {k: self._dtype_map.get(v, pl.String) for k, v in schema_dict.items()}
 
     def _get_path(self, dataset_id: str, subdir: str) -> Path:
         return self.data_dir / subdir / dataset_id
@@ -44,7 +58,14 @@ class ProcessingManager:
                     
                     if suffix == ".csv":
                         rprint(f"Reading CSV: {file_path.name}")
-                        df = pl.read_csv(file_path, ignore_errors=True, infer_schema_length=10000)
+                        dataset = Registry.get(dataset_id)
+                        schema = self._get_pl_schema(dataset.expected_schema) if dataset else None
+                        df = pl.read_csv(
+                            file_path, 
+                            ignore_errors=True, 
+                            infer_schema_length=10000,
+                            schema_overrides=schema
+                        )
                     elif suffix in [".xls", ".xlsx"]:
                          rprint(f"Reading Excel: {file_path.name}")
                          df = pl.read_excel(file_path)

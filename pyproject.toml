@@ -1,7 +1,7 @@
 [project]
 name = "retaildata"
-version = "0.1.0"
-description = "Secure CLI + Python API to download and manage real-world retail benchmark datasets."
+version = "0.1.3"
+description = "Unified download and managing of real-world retail datasets for analysis and benchmarking."
 authors = [
   {name = "Gwang-Jin Kim", email = "gwang.jin.kim.phd@gmail.com"}
 ]

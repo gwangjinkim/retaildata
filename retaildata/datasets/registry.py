@@ -17,6 +17,9 @@ class Dataset(BaseModel):
     uci_id: Optional[int] = None # For UCI provider
     openml_id: Optional[int] = None # For OpenML provider
     
+    # Validation
+    expected_schema: Optional[Dict[str, str]] = None # e.g. {"date": "Date", "store_nbr": "Int64"}
+    
     # M8: Bayesian Data Utilities
     standard_mapping: Optional[Dict[str, str]] = None # e.g. {"sales": "sales_train_eval", "calendar": "calendar"}
     hierarchies: Optional[List[List[str]]] = None # e.g. [["item_id", "dept_id"], ["dept_id", "cat_id"]]
@@ -86,7 +89,21 @@ Registry.register(Dataset(
     requires_credentials=True,
     kaggle_id="mashlyn/online-retail-ii-uci",
     description="Online Retail II Data Set contains all the transactions occurring for a UK-based and registered, non-store online retail between 01/12/2009 and 09/12/2011.",
-    license_notes="UCI Machine Learning Repository"
+    license_notes="UCI Machine Learning Repository",
+    expected_schema={
+        "Invoice": "String",
+        "StockCode": "String",
+        "Description": "String",
+        "Quantity": "Int64",
+        "InvoiceDate": "String", # Will be parsed later
+        "Price": "Float64",
+        "Customer ID": "Float64",
+        "Country": "String"
+    },
+    standard_mapping={
+        "sales": "online_retail_II",
+        "date_col": "InvoiceDate"
+    }
 ))
 
 Registry.register(Dataset(

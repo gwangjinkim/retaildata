@@ -148,7 +148,14 @@ def inspect(
             if file_path.suffix.lower() == ".parquet":
                 df = pl.read_parquet(file_path) # Parquet is fast enough
             elif file_path.suffix.lower() == ".csv":
-                df = pl.read_csv(file_path, n_rows=1000) # Only first 1000 for raw
+                schema = dataset.expected_schema or None
+                df = pl.read_csv(
+                    file_path, 
+                    n_rows=1000, 
+                    ignore_errors=True, 
+                    infer_schema_length=10000,
+                    schema_overrides=schema
+                ) # Only first 1000 for raw
             else:
                 df = pl.read_excel(file_path)
             
