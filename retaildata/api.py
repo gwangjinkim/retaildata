@@ -94,6 +94,31 @@ class RetailDataAPI:
         
         return None
 
+    def get(
+        self,
+        dataset_id: str,
+        data_dir: Optional[Path] = None,
+        cache: bool = True,
+        prepare: bool = False,
+        lazy: bool = False,
+        sample_fraction: Optional[float] = None,
+        stratify_col: Optional[str] = None,
+        split_fraction: Optional[float] = None,
+        **kwargs
+    ) -> Optional[Dict[str, Any]]:
+        """Alias for ``download`` matching the public API contract."""
+        return self.download(
+            dataset_id=dataset_id,
+            data_dir=data_dir,
+            cache=cache,
+            prepare=prepare,
+            lazy=lazy,
+            sample_fraction=sample_fraction,
+            stratify_col=stratify_col,
+            split_fraction=split_fraction,
+            **kwargs,
+        )
+
     def load(
         self, 
         dataset_id: str, 
@@ -199,4 +224,33 @@ class RetailDataAPI:
         
         return {"train": train, "test": test}
 
+
 api = RetailDataAPI()
+
+
+def list_datasets() -> List[Dataset]:
+    """Return all dataset descriptors in the registry."""
+    return api.list_datasets()
+
+
+def get(dataset_id: str, data_dir: Optional[Path] = None, cache: bool = True, prepare: bool = False, **kwargs) -> Optional[Dict[str, Any]]:
+    """Download a dataset and optionally prepare it."""
+    return api.get(dataset_id=dataset_id, data_dir=data_dir, cache=cache, prepare=prepare, **kwargs)
+
+
+def load(dataset_id: str, data_dir: Optional[Path] = None, lazy: bool = False, standardized: bool = False) -> Dict[str, Any]:
+    """Load prepared dataset artifacts."""
+    return api.load(dataset_id=dataset_id, data_dir=data_dir, lazy=lazy, standardized=standardized)
+
+
+def purge(dataset_id: Optional[str] = None, all: bool = False) -> None:
+    """Delete one dataset or purge all managed dataset data."""
+    from retaildata.cache.manager import manager as cache_manager
+
+    if all:
+        cache_manager.purge_all()
+        return
+    if dataset_id:
+        cache_manager.delete_dataset(dataset_id)
+        return
+    raise ValueError("Pass dataset_id or all=True to purge data")
