@@ -1,0 +1,19 @@
+site_name: RetailData Documentation
+theme:
+  name: material
+  palette:
+    primary: indigo
+    accent: indigo
+
+nav:
+  - Home: index.md
+  - Getting Started: getting_started.md
+  - API Reference: api.md
+  - ML Integrations: ml.md
+  - Optimization: optimization.md
+  - Operational Connectors: dlt_integration.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences

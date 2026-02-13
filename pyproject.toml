@@ -1,0 +1,46 @@
+[project]
+name = "retaildata"
+version = "0.1.0"
+description = "Secure CLI + Python API to download and manage real-world retail benchmark datasets."
+authors = [
+  {name = "Gwang-Jin Kim", email = "gwang.jin.kim.phd@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "argon2-cffi>=25.1.0",
+    "cryptography>=46.0.5",
+    "httpx>=0.28.1",
+    "kaggle>=1.7.4.5",
+    "keyring>=25.7.0",
+    "platformdirs>=4.4.0",
+    "pydantic>=2.12.5",
+    "pydantic-settings>=2.0.0",
+    "rich>=14.3.2",
+    "tqdm>=4.67.3",
+    "typer>=0.23.0",
+    "polars>=0.20.0",
+    "huggingface_hub>=0.20.0",
+    "ucimlrepo",
+    "openml",
+    "numpy>=1.20.0",
+]
+
+[project.optional-dependencies]
+torch = ["torch>=2.0.0"]
+tf = ["tensorflow>=2.10.0"]
+jax = ["jax>=0.4.0", "jaxlib>=0.4.0"]
+dlt = ["dlt[duckdb]>=0.3.0"]
+all = ["torch>=2.0.0", "tensorflow>=2.10.0", "jax>=0.4.0", "jaxlib>=0.4.0", "dlt[duckdb]>=0.3.0"]
+
+[dependency-groups]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-mock>=3.10.0",
+]
+
+[project.scripts]
+retaildata = "retaildata.main:main"
+
+[tool.setuptools]
+packages = ["retaildata"]

@@ -1,0 +1,27 @@
+# build artifacts
+dist/
+build/
+*.egg-info/
+
+# python caches
+__pycache__/
+*.pyc
+
+# local retaildata outputs (common names)
+test_data_*/
+test_m*/
+data/
+.cache/
+*.duckdb
+
+# datasets
+*.csv
+*.parquet
+*.feather
+*.jsonl
+*.zip
+*.7z
+*.tar
+*.gz
+*.bz2
+*.xz
