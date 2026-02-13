@@ -1,12 +1,12 @@
 [project]
 name = "retaildata"
-version = "0.1.4"
+version = "0.1.5"
 description = "Unified download and managing of real-world retail datasets for analysis and benchmarking."
 authors = [
   {name = "Gwang-Jin Kim", email = "gwang.jin.kim.phd@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 dependencies = [
     "argon2-cffi>=25.1.0",
     "cryptography>=46.0.5",
@@ -42,5 +42,5 @@ dev = [
 [project.scripts]
 retaildata = "retaildata.main:main"
 
-[tool.setuptools]
-packages = ["retaildata"]
+[tool.setuptools.packages.find]
+include = ["retaildata*"]
